@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -46,17 +48,35 @@ class _PaymentScreenState extends State<PaymentScreen> {
             SizedBox(height: 12),
             TextFormField(
               autovalidateMode: AutovalidateMode.always,
-               keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 16.h, horizontal: 16.w),
-                            border: const OutlineInputBorder(),
-                            hintText: "Enter Amount",
-                            hintStyle: TextStyle(fontSize: 20.sp),
-                            prefixText: "₹",
-                            prefixStyle: TextStyle(fontSize: 20.sp)),
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  border: const OutlineInputBorder(),
+                  hintText: "Enter Amount",
+                  hintStyle: TextStyle(fontSize: 20),
+                  prefixText: "₹",
+                  prefixStyle: TextStyle(fontSize: 20)),
               style: TextStyle(fontSize: 18),
-            )
+            ),
+            SizedBox(height: 15),
+             Text('Payment mode',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
+            Column(
+              children: [
+                Row(
+                  children: [
+                     ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.network(
+                        'https://cdn-icons-png.flaticon.com/512/4947/4947090.png',
+                        fit: BoxFit.fill,
+                        height: 120,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+              )
           ]),
         ),
       ),

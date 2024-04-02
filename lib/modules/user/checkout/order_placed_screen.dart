@@ -42,7 +42,7 @@ class _OrderPlacedState extends State<OrderPlaced> {
                   child: Image(
                     image: AssetImage("assets/images/ic_thank_you.png"),
                     width: 300,
-                  ),
+                  ),J
                 ),
               ),
               flex: 5,
