@@ -2,7 +2,10 @@ import 'package:crafton/modules/user/cart/cart_page.dart';
 import 'package:flutter/material.dart';
 
 class SingleProduct extends StatefulWidget {
-  const SingleProduct({super.key});
+   SingleProduct({super.key,required this.details});
+
+
+  Map<String,dynamic> details;
 
   @override
   State<SingleProduct> createState() => _SingleProductState();
@@ -35,7 +38,7 @@ class _SingleProductState extends State<SingleProduct> {
               Hero(
                   tag: 'heroTag',
                   child: Image(
-                    image: AssetImage("assets/images/craft.jpg"),
+                    image: NetworkImage(widget.details['image'][0]),
                     height: MediaQuery.of(context).size.height / 1.5,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -103,28 +106,37 @@ class _SingleProductState extends State<SingleProduct> {
 //product detail section
 
                 child: Container(
-                  padding: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(15),
                   height: 320,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+
+                      Text('Name',style: TextStyle(color: Colors.black,fontSize: 16),),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Container(
                             margin: EdgeInsets.only(left: 8),
                             child: Text(
-                              "Product name",
+                              widget.details['product_name'],
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
-                          IconButton(icon: Icon(Icons.close), onPressed: () {})
+                         
                         ],
                       ),
+
+                      SizedBox(height: 10,),
+
+                      Text('Description',style: TextStyle(color: Colors.black,fontSize: 16),),
+                     SizedBox(height: 5,),
+                     
                       Container(
                         margin: EdgeInsets.only(left: 8),
                         alignment: Alignment.topLeft,
                         child: Text(
-                          "Description",
+                          widget.details['description'],
                           textAlign: TextAlign.start,
                           style: TextStyle(
                               color: Colors.black.withOpacity(0.8),
@@ -143,6 +155,7 @@ class _SingleProductState extends State<SingleProduct> {
                       //   ),
                       // ),
                       SizedBox(height: 8),
+                      Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -151,38 +164,22 @@ class _SingleProductState extends State<SingleProduct> {
                             child: Text(
                               "Price",
                               style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
+                                  TextStyle(color: Colors.grey, fontSize: 20),
                             ),
                           ),
                           Container(
                             margin: EdgeInsets.only(right: 8),
                             child: Text(
-                              "\$299.00",
+                            widget.details['price'],
                               style: TextStyle(
                                   color: Colors.greenAccent.shade700,
-                                  fontSize: 14),
+                                  fontSize: 16),
                             ),
                           ),
                         ],
                       ),
                       SizedBox(height: 16),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red.shade700,
-                          padding: EdgeInsets.only(
-                              top: 12, left: 60, right: 60, bottom: 12),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(24))),
-                        ),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CartPage(),));
-                        },
-                        child: Text(
-                          "Add To Cart",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      )
+                      
                     ],
                   ),
                   decoration: BoxDecoration(

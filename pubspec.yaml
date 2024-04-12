@@ -38,6 +38,9 @@ dependencies:
   carousel_slider: ^4.2.1
   carousel_images: ^1.1.2
   line_awesome_flutter: ^2.0.0
+  http: 
+  shared_preferences: ^2.2.2
+  image_picker: 
 
 dev_dependencies:
   flutter_test:

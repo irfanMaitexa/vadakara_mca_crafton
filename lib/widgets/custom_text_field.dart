@@ -6,21 +6,25 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final Color ? borderColor;
   final bool ? obscureText;
+   String? Function(String?)? validator;
 
 
-  const CustomTextField({
+   CustomTextField({
+
     Key? key,
     required this.hintText,
     required this.labelText,
     required this.controller,
     this.borderColor,
     this.obscureText,
+    this.validator
 
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      validator: validator,
       controller: controller,
       obscureText: obscureText??false,
       decoration: InputDecoration(

@@ -1,6 +1,7 @@
 
 import 'package:crafton/modules/student/home/student_home_screen.dart';
 import 'package:crafton/modules/student/product/add_product_screen.dart';
+import 'package:crafton/modules/student/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class StudentRootScreen extends StatefulWidget {
@@ -24,6 +25,7 @@ class _StudentRootScreenState extends State<StudentRootScreen> {
   final _pagesList = [
     const StudentHome(),
     AddProduct(),
+    StudentProfileScreen()
   ];
 
 

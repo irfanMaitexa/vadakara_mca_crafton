@@ -30,7 +30,7 @@ class AllProductWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(2.0),
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SingleProduct(),));
+                          // Navigator.push(context, MaterialPageRoute(builder: (context) => SingleProduct(details: data[index],),));
                         },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
@@ -50,7 +50,7 @@ class AllProductWidget extends StatelessWidget {
                     children: [
                       InkWell(
                          onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SingleProduct(),));
+                        //  Navigator.push(context, MaterialPageRoute(builder: (context) => SingleProduct(),));
                         },
                         child: Text(
                           'Product name',

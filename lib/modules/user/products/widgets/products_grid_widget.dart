@@ -42,7 +42,7 @@ class AllProductGridWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => SingleProduct(),));
+                         // Navigator.push(context, MaterialPageRoute(builder: (context) => SingleProduct(),));
                         },
                         child: Image.network(
                           productList[index],
@@ -63,7 +63,7 @@ class AllProductGridWidget extends StatelessWidget {
                           ),
                           InkWell(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => SingleProduct(),));
+                             // Navigator.push(context, MaterialPageRoute(builder: (context) => SingleProduct(),));
                             },
                             child: const Text(
                               'Name',

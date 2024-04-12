@@ -1,4 +1,7 @@
+import 'package:crafton/modules/student/Students_all_product_list.dart';
 import 'package:crafton/modules/student/product/my_product_screen.dart';
+import 'package:crafton/modules/student/student_all_product.dart';
+import 'package:crafton/modules/student/student_product.dart';
 import 'package:crafton/modules/user/home/widgets/all_product_widget.dart';
 import 'package:crafton/modules/user/home/widgets/work_highlight_widget.dart';
 import 'package:crafton/modules/user/products/all_products_screen.dart';
@@ -98,7 +101,7 @@ class _StudentHomeState extends State<StudentHome> {
                       ],
                     ),
                   ),
-                  HighLightWidget(),
+                  StudentProductWidget(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -110,7 +113,7 @@ class _StudentHomeState extends State<StudentHome> {
                                 fontFamily: 'Ubuntu-Bold')),
                         InkWell(
                           onTap:() {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => AllProducts(),));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => StudentAllProductList(),));
                           },
                           child: Text(
                             'See all',
@@ -121,7 +124,7 @@ class _StudentHomeState extends State<StudentHome> {
                       ],
                     ),
                   ),
-                  AllProductWidget()
+                  StudentAllProduct()
                 ],
               )
             ],

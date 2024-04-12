@@ -6,14 +6,14 @@ import 'package:crafton/servieces/db_services.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class HighLightWidget extends StatefulWidget {
-  HighLightWidget({super.key});
+class StudentProductWidget extends StatefulWidget {
+  StudentProductWidget({super.key});
 
   @override
-  State<HighLightWidget> createState() => _HighLightWidgetState();
+  State<StudentProductWidget> createState() => _StudentProductWidgetState();
 }
 
-class _HighLightWidgetState extends State<HighLightWidget> {
+class _StudentProductWidgetState extends State<StudentProductWidget> {
   final highlightList = [
     'https://images.herzindagi.info/image/2022/Jan/craft-item-you-can-make-with-paper-plate.jpg',
     'https://5.imimg.com/data5/SELLER/Default/2022/3/GX/KZ/NO/143524742/new-product-500x500.jpeg',
