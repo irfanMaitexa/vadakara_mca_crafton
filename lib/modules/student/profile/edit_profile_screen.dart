@@ -1,13 +1,66 @@
+import 'package:crafton/servieces/api_service.dart';
 import 'package:crafton/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-class StudentEditUserProfile extends StatelessWidget {
-  StudentEditUserProfile({super.key});
+class EditStudentsProfile extends StatefulWidget {
+  
+
+
+  final String  name;
+  final String email;
+  final String mobile;
+  final String address;
+  final String id;
+  final String stream;
+  final String accadamicYear;
+  final String courseName;
+ 
+
+
+
+
+
+
+   const EditStudentsProfile({super.key,required this.id , required this.name, required this.email, required this.mobile, required this.address, required this.stream, required this.accadamicYear, required this.courseName});
+
+  @override
+  State<EditStudentsProfile> createState() => _EditStudentsProfileState();
+}
+
+class _EditStudentsProfileState extends State<EditStudentsProfile> {
   final _nameController = TextEditingController();
+
   final _emailController = TextEditingController();
+
   final _mobileController = TextEditingController();
+
   final _addressController = TextEditingController();
-  final _passwordController = TextEditingController();
+
+  final _stramControlller = TextEditingController();
+
+  final _courseNameController = TextEditingController();
+
+  final _accadmicYeae = TextEditingController();
+
+
+  bool loading = false;
+
+
+  @override
+  void initState() {
+    _addressController.text = widget.address;
+    _emailController.text = widget.email;
+    _mobileController.text = widget.mobile;
+    _nameController.text =  widget.name;
+    _accadmicYeae.text = widget.accadamicYear;
+    _courseNameController.text = widget.courseName;
+
+  
+    
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
@@ -15,7 +68,7 @@ class StudentEditUserProfile extends StatelessWidget {
      appBar: AppBar(
         backgroundColor: Colors.red.shade700,
         // leading: IconButton(onPressed: () => {}, icon: const Icon(Icons.shopping_cart)),
-        title: Text('Edit Profile',
+        title: const Text('Edit Profile',
             style: TextStyle(color: Colors.white, fontFamily: 'Ubuntu-Bold')),
         actions: [
           IconButton(
@@ -26,7 +79,7 @@ class StudentEditUserProfile extends StatelessWidget {
               ))
         ],
       ),
-      body: SingleChildScrollView(
+      body:loading? Center(child: CircularProgressIndicator(),) : SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -92,22 +145,50 @@ class StudentEditUserProfile extends StatelessWidget {
                       labelText: 'Address',
                     ),
                   ),
+
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    padding: const  EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                     child: CustomTextField(
-                      obscureText: true,
-                      controller: _passwordController,
-                      labelText: 'Password',
-                      hintText: 'Enter secure password',
+                      controller: _stramControlller,
+                      hintText: 'Enter your stram',
+                      labelText: 'Stream',
                     ),
                   ),
+                  Padding(
+                    padding: const  EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                    child: CustomTextField(
+                      controller: _courseNameController,
+                      hintText: 'Enter your course name',
+                      labelText: 'course Name',
+                    ),
+                  ),
+                  
                     const SizedBox(height: 50),
 
                     // -- Form Submit Button
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () => {},
+                        onPressed: () async {
+                          setState(() {
+                            loading =  true;
+                          });
+
+                          await ApiService().updateProfile(
+                            context: context, 
+                            id: widget.id, 
+                            name: widget.name, 
+                            mobile: widget.mobile, 
+                            academicYear: widget.accadamicYear ,
+                            courseName:  widget.courseName, 
+                            stream: widget.stream
+                            );
+
+                             Navigator.pop(context,true);
+                          
+                          
+                          
+                        },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.red.shade700,
                             side: BorderSide.none,

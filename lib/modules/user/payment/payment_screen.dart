@@ -1,19 +1,56 @@
+import 'package:crafton/modules/user/checkout/order_placed_screen.dart';
+import 'package:crafton/servieces/api_service.dart';
+import 'package:crafton/servieces/db_services.dart';
+import 'package:crafton/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class PaymentScreen extends StatefulWidget {
-  const PaymentScreen({super.key});
+  const PaymentScreen({super.key, required this.totalAmount});
+
+
+  final String totalAmount;
 
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
+
+
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomSheet: loading ?  CircularProgressIndicator()  : CustomButton(
+        text: 'Confirm', onPressed: () async{
+
+          try{
+            setState(() {
+              loading  = true;
+            });
+
+            await ApiService().orderProduct(loginId: DbService.getLoginId()!, context: context);
+
+         
+
+            loading = false;
+
+          }catch(e){
+
+
+            setState(() {
+              loading = false;
+            });
+
+          }
+
+
+         
+        },),
       appBar: AppBar(
         backgroundColor: Colors.red.shade700,
         // leading: IconButton(onPressed: () => {}, icon: const Icon(Icons.shopping_cart)),
+
         title: Text('Payment',
             style: TextStyle(color: Colors.white, fontFamily: 'Ubuntu-Bold')),
         actions: [
@@ -39,7 +76,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
             Text('Amount to be paid'),
             SizedBox(height: 12),
             Text(
-              '₹ 5000',
+              '₹${widget.totalAmount}',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             Divider(endIndent: 10, indent: 10),
@@ -51,7 +88,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   contentPadding:
                       EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                   border: const OutlineInputBorder(),
-                  hintText: "Enter Amount",
+                  hintText: "Enter method",
                   hintStyle: TextStyle(fontSize: 20),
                   prefixText: "₹",
                   prefixStyle: TextStyle(fontSize: 20)),

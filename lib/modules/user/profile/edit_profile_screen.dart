@@ -2,12 +2,26 @@ import 'package:crafton/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class EditUserProfile extends StatelessWidget {
-  EditUserProfile({super.key});
+  
+
+
+  final String  name;
+  final String email;
+  final String mobile;
+  final String address;
+
+
+
+
+
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _mobileController = TextEditingController();
   final _addressController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _streamController = TextEditingController();
+
+   EditUserProfile({super.key, required this.name, required this.email, required this.mobile, required this.address});
+
   @override
   Widget build(BuildContext context) {
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
@@ -92,15 +106,7 @@ class EditUserProfile extends StatelessWidget {
                       labelText: 'Address',
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    child: CustomTextField(
-                      obscureText: true,
-                      controller: _passwordController,
-                      labelText: 'Password',
-                      hintText: 'Enter secure password',
-                    ),
-                  ),
+                  
                     const SizedBox(height: 50),
 
                     // -- Form Submit Button

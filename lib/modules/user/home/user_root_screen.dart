@@ -25,6 +25,7 @@ class _UserRootScreenState extends State<UserRootScreen> {
   final _pagesList = [
     const Home(),
     CartPage(),
+    Scaffold(appBar: AppBar(title: Text('booking'),),),
     ProfileScreen(),
   ];
 
@@ -46,9 +47,16 @@ class _UserRootScreenState extends State<UserRootScreen> {
             icon: Icon(Icons.home),
             label: 'Home',
           ),
+
+         
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
             label: 'Cart',
+          ),
+
+           BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: 'Bookings',
           ),
        
           BottomNavigationBarItem(

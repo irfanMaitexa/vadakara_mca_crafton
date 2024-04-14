@@ -57,7 +57,6 @@ class ProfileScreen extends StatelessWidget {
                 width: 200,
                 child: ElevatedButton(
                   onPressed: () => {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => EditUserProfile(),))
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red.shade700,

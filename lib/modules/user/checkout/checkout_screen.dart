@@ -1,14 +1,22 @@
 import 'package:crafton/modules/user/checkout/order_placed_screen.dart';
+import 'package:crafton/modules/user/payment/payment_screen.dart';
+import 'package:crafton/widgets/custom_button.dart';
+import 'package:crafton/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class CheckOut extends StatefulWidget {
-  const CheckOut({super.key});
+  const CheckOut({super.key, required this.amount});
+
+
+  final String  amount;
 
   @override
   State<CheckOut> createState() => _CheckOutState();
 }
 
 class _CheckOutState extends State<CheckOut> {
+  final _addressController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +39,7 @@ class _CheckOutState extends State<CheckOut> {
           Expanded(
               child: ListView(children: [
             Container(
-              margin: EdgeInsets.only(top:50,bottom: 4,left: 4,right: 4),
+              margin: EdgeInsets.only(top: 50, bottom: 4, left: 4, right: 4),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(4)),
               ),
@@ -47,74 +55,17 @@ class _CheckOutState extends State<CheckOut> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const SizedBox(
+                        height: 18,
+                      ),
+
+                      CustomTextField(
+                          hintText: 'Enter delivery address',
+                          labelText: 'Address',
+                          controller: _addressController),
+
                       SizedBox(
-                        height: 6,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            "James Francois (Default)",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(
-                                left: 8, right: 8, top: 4, bottom: 4),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                color: const Color.fromARGB(255, 234, 213, 213),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(16))),
-                            child: Text(
-                              "HOME",
-                              style: TextStyle(
-                                  color: Colors.indigoAccent.shade200,
-                                  fontSize: 8),
-                            ),
-                          )
-                        ],
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 16),
-                        child: Text(
-                          "431, Commerce House, Nagindas Master, Fort",
-                          style: TextStyle(
-                              fontSize: 12, color: Colors.grey.shade800),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 6),
-                        child: Text(
-                          "Mumbai - 400023",
-                          style: TextStyle(
-                              fontSize: 12, color: Colors.grey.shade800),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 6),
-                        child: Text(
-                          "Maharashtra",
-                          style: TextStyle(
-                              fontSize: 12, color: Colors.grey.shade800),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      RichText(
-                        text: TextSpan(children: [
-                          TextSpan(
-                              text: "Mobile : ",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.grey.shade800)),
-                          TextSpan(
-                              text: "02222673745",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 12)),
-                        ]),
-                      ),
-                      SizedBox(
-                        height: 16,
+                        height: 10,
                       ),
 
                       // standard Delivery
@@ -341,7 +292,7 @@ class _CheckOutState extends State<CheckOut> {
                                           color: Colors.black, fontSize: 12),
                                     ),
                                     Text(
-                                      '2013',
+                                      '${widget.amount}',
                                       style: TextStyle(
                                           color: Colors.black, fontSize: 12),
                                     )
@@ -362,10 +313,19 @@ class _CheckOutState extends State<CheckOut> {
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.red.shade700),
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPlaced(),));
-                                      /*Navigator.of(context).push(new MaterialPageRoute(
-                                                                  builder: (context) => OrderPlacePage()));*/
-                                      // showThankYouBottomSheet(context);
+                                      if (_addressController.text.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    'Add delevery address')));
+                                      } else {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PaymentScreen(totalAmount: widget.amount,),
+                                            ));
+                                      }
                                     },
                                     child: Text(
                                       "Place Order",

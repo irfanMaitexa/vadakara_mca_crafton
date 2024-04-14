@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:crafton/modules/auth/login_screen.dart';
 import 'package:crafton/modules/student/home/student_root_screen.dart';
+import 'package:crafton/modules/user/checkout/order_placed_screen.dart';
 import 'package:crafton/servieces/db_services.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -141,11 +142,11 @@ class ApiService {
 
         await DbService.setLoginId(data['loginId']);
 
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Login successful'),
-          duration: Duration(seconds: 2),
-        ),
-
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Login successful'),
+            duration: Duration(seconds: 2),
+          ),
         );
 
         return data['userRole'];
@@ -161,7 +162,6 @@ class ApiService {
         return null;
       }
     } catch (e) {
-      
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error: $e'),
         duration: Duration(seconds: 2),
@@ -194,7 +194,7 @@ class ApiService {
       if (response.statusCode == 200) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-             SnackBar(content: Text('Product added successfully')),
+            SnackBar(content: Text('Product added successfully')),
           );
 
           Navigator.pushAndRemoveUntil(
@@ -205,23 +205,19 @@ class ApiService {
               (route) => false);
         }
       } else {
-        if(context.mounted){
-
+        if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(
-                  'Failed to add product. Status code: ${response.statusCode}')),
-        );
+            SnackBar(
+                content: Text(
+                    'Failed to add product. Status code: ${response.statusCode}')),
+          );
         }
       }
     } catch (e) {
-      if(context.mounted){
-
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error adding product: $e')),
-      );
-
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error adding product: $e')),
+        );
       }
     }
   }
@@ -234,27 +230,24 @@ class ApiService {
 
       if (response.statusCode == 200) {
         // Product deleted successfully
-        if(context.mounted){
+        if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Product deleted successfully')),
-        );
+            SnackBar(content: Text('Product deleted successfully')),
+          );
         }
       } else {
         // Failed to delete product
-       if(context.mounted){
-
-         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to delete product')),
-        );
-
-       }
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to delete product')),
+          );
+        }
       }
     } catch (e) {
-      if(context.mounted){
-
+      if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error deleting product: $e')),
-      );
+        );
       }
     }
   }
@@ -329,6 +322,179 @@ class ApiService {
       );
     }
   }
+
+  //update profile
+
+  Future<void> updateProfile({
+    required BuildContext context,
+    required String id,
+    required String name,
+    required String mobile,
+    required String academicYear,
+    required String courseName,
+    required String stream,
+  }) async {
+    try {
+      final Uri url = Uri.parse(
+          '$baseUrl/student/update-profile/$id?name=$name&mobile=$mobile&academic_year=$academicYear&course_name=$courseName');
+      final response = await http.get(url);
+
+      print(response.body);
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Profile updated successfully'),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Profile update faild'),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Error updating profile: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to update profile'),
+        ),
+      );
+    }
+  }
+
+  Future<void> addToCart({
+    required String loginId,
+    required String productId,
+    required double price,
+    required BuildContext context,
+  }) async {
+    print('dddddddddddddddddddddddddddddddddddddddddddddddddd');
+    try {
+      final response = await http.post(
+        Uri.parse(
+            '${ApiService.baseUrl}/api/user/add-to-cart/$loginId/$productId'),
+        body: {'price': price.toString()},
+      );
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Added to cart successfully')),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Added to cart Faild')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Somthing went wrong')),
+      );
+    }
+  }
+
+  //update quantity
+  Future<void> updateCartQuantity(
+      {required BuildContext context,
+      required String id,
+      required int quantity}) async {
+    try {
+      final Uri url =
+          Uri.parse('${ApiService.baseUrl}/api/user/update-cart-quantity/$id');
+      final response = await http.post(
+        url,
+        body: {
+          'quantity': quantity.toString(),
+        },
+      );
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Quantity updated successfully'),
+          ),
+        );
+      } else {
+        throw Exception('Failed to update quantity');
+      }
+    } catch (e) {
+      print('Error updating quantity: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to update quantity'),
+        ),
+      );
+    }
+  }
+
+
+
+  Future<void> deleteCartItem(String id,BuildContext  context) async {
+  try {
+    final response = await http.get(
+      Uri.parse('${ApiService.baseUrl}/api/user/delete-cart/$id'),
+    );
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Item deleted successfully')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete item')),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Failed to delete item: $e')),
+    );
+  }
+
+
+
+
+  
+}
+
+
+
+
+
+
+Future<void> orderProduct({
+  required String loginId,
+  required  BuildContext context}) async {
+  try {
+    final response = await http.get(
+      Uri.parse('$baseUrl/api/user/order-product/$loginId'),
+    );
+
+    print(response.body);
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Product ordered successfully')),
+        
+      );
+         Navigator.push(context, MaterialPageRoute(builder: (context) => OrderPlaced(),));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to order product')),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Failed to order product: $e')),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
 
 //all product
 }
