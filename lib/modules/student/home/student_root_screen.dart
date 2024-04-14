@@ -25,8 +25,11 @@ class _StudentRootScreenState extends State<StudentRootScreen> {
   final _pagesList = [
     const StudentHome(),
     AddProduct(),
-    StudentProfileScreen()
+    StudentProfileScreen(),
   ];
+
+
+  
 
 
 
